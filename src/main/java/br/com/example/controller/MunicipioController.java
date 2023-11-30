@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(origins = "*")
-@OpenAPIDefinition(info = @Info(title = "Municípios API", version = "1.0", description = "Dados de Municípios"))
+@OpenAPIDefinition(info = @Info(title = "BDGeo API", version = "1.0", description = "Dados Geograficos"))
 public class MunicipioController {
     
     @Autowired
@@ -29,6 +29,36 @@ public class MunicipioController {
 //     public Double distanciaEntreMunicipios(@PathVariable String municipioA, @PathVariable String municipioB){
 //        double result = repository.distanciaEntreMunicipios(municipioA, municipioB);
 //        return result;
-//    }    
+//    }
+    
+    @GetMapping("/municipiosAeroportos/{sigla}")
+    public List<MunicipioVO> municipiosComAeroportoUF(@PathVariable String sigla){
+        return repository.listarCidadesComAeroportosPorUF(sigla);
+    }
+    
+    @GetMapping("/municipiosAeroportosRegiao/{regiao}")
+    public List<MunicipioVO> municipiosComAeroportosRegiao(@PathVariable String regiao){
+        return repository.listarCidadesComAeroportosPorRegiao(regiao);
+    }
+    
+    @GetMapping("/municipiosArmazens/{sigla}")
+    public List<MunicipioVO> municipiosComArmazemUF(@PathVariable String sigla){
+        return repository.listarCidadesComArmazemPorUF(sigla);
+    }
+    
+    @GetMapping("/municipiosArmazensRegiao/{regiao}")
+    public List<MunicipioVO> municipiosComArmazemRegiao(@PathVariable String regiao){
+        return repository.listarCidadesComArmazemPorRegiao(regiao);
+    }
+    
+    @GetMapping("/municipiosPossuem/{regiao}")
+    public List<MunicipioVO> municipiosPossuem(@PathVariable String regiao){
+        return repository.listarCidadesPossuem(regiao);
+    }
+    
+    @GetMapping("/municipiosFronteira")
+    public List<MunicipioVO> municipiosFronteira(){
+        return repository.listarCidadesPontosFronteira();
+    }
     
 }

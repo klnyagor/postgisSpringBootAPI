@@ -36,11 +36,11 @@ public interface MunicipioRepository extends JpaRepository<Municipio, Integer>{
     List<MunicipioVO> listarCidadesComArmazemPorUF(String sigla);
     
     //-- Cidades com armazens na região 'nome_regia'
-    @Query(value = "SELECT new br.com.example.model.VO.MunicipioVO(m.gid,m.cod_mun,m.nm_mun,m.sigla_uf,m.area_km2,m.geometria) FROM Municipio m INNER JOIN UnidadeFederativa uf ON ST_WITHIN(m.geometria, uf.geometria)=true INNER JOIN Armazem am ON ST_WITHIN(am.geometria, m.geometria)=true WHERE u.nm_regiao = :regiao ORDER BY m.sigla_uf")
+    @Query(value = "SELECT new br.com.example.model.VO.MunicipioVO(m.gid,m.cod_mun,m.nm_mun,m.sigla_uf,m.area_km2,m.geometria) FROM Municipio m INNER JOIN UnidadeFederativa uf ON ST_WITHIN(m.geometria, uf.geometria)=true INNER JOIN Armazem am ON ST_WITHIN(am.geometria, m.geometria)=true WHERE uf.nm_regiao = :regiao ORDER BY m.sigla_uf")
     List<MunicipioVO> listarCidadesComArmazemPorRegiao(String regiao);
     
     //-- Cidades que possuem Aeroportos, armazens e rodovias por nm_regiao
-    @Query(value = "SELECT new br.com.example.model.VO.MunicipioVO(m.gid,m.cod_mun,m.nm_mun,m.sigla_uf,m.area_km2,m.geometria) FROM Municipio m INNER JOIN Aeroporto a ON ST_WITHIN(a.geometria, m.geometria)=ture INNER JOIN Armazem am ON ST_WITHIN(am.geometria, m.geometria)=true INNER JOIN Rodovia r ON ST_INTERSECTS(r.geometria, m.geometria)=true INNER JOIN UnidadeFederativa uf ON ST_CONTAINS(uf.geometria, m.geometria)=true WHERE uf.nm_regiao = :regiao")
+    @Query(value = "SELECT new br.com.example.model.VO.MunicipioVO(m.gid,m.cod_mun,m.nm_mun,m.sigla_uf,m.area_km2,m.geometria) FROM Municipio m INNER JOIN Aeroporto a ON ST_WITHIN(a.geometria, m.geometria)=true INNER JOIN Armazem am ON ST_WITHIN(am.geometria, m.geometria)=true INNER JOIN Rodovia r ON ST_INTERSECTS(r.geometria, m.geometria)=true INNER JOIN UnidadeFederativa uf ON ST_CONTAINS(uf.geometria, m.geometria)=true WHERE uf.nm_regiao = :regiao")
     List<MunicipioVO> listarCidadesPossuem(String regiao);
     
     //-- Cidades geograficamente marcadas com Pontos de Fronteira

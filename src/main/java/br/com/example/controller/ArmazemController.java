@@ -4,8 +4,8 @@
  */
 package br.com.example.controller;
 
-import br.com.example.model.VO.AeroportoVO;
-import br.com.example.repository.AeroportoRepository;
+import br.com.example.model.VO.ArmazemVO;
+import br.com.example.repository.ArmazemRepository;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import java.util.List;
@@ -23,24 +23,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = "*")
 @OpenAPIDefinition(info = @Info(title = "BDGeo API", version = "1.0", description = "Dados Geograficos"))
-public class AeroportoController {
+public class ArmazemController {
     
     @Autowired
-    private AeroportoRepository repository;
+    private ArmazemRepository repository;
     
-    @GetMapping("/aeroportosUF/{sigla}")
-    public List<AeroportoVO> aeroportosUF(@PathVariable String sigla){
-        return repository.listarAeroportosUF(sigla);
+    @GetMapping("/armazensUF/{sigla}")
+    public List<ArmazemVO> armazensUF(@PathVariable String sigla){
+        return repository.armazemUF(sigla);
     }
     
-    @GetMapping("/aeroportosRegiao/{regiao}")
-    public List<AeroportoVO> aeroportosRegiao(@PathVariable String regiao){
-        return repository.listarAeroportosRegiao(regiao);
+    @GetMapping("/armazensRegiao/{regiao}")
+    public List<ArmazemVO> armazensRegiao(@PathVariable String regiao){
+        return repository.armazemRegiao(regiao);
     }
-    
-    @GetMapping("/distanciaEntreAeroportos/{municipioA}/{municipioB}")
-    public Double distanciaAeroportos(@PathVariable String municipioA, @PathVariable String municipioB){
-        return repository.distanciaAeroportos(municipioA, municipioB);
-    }
-    
 }

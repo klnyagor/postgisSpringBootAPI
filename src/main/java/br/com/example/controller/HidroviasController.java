@@ -4,8 +4,8 @@
  */
 package br.com.example.controller;
 
-import br.com.example.model.VO.AeroportoVO;
-import br.com.example.repository.AeroportoRepository;
+import br.com.example.model.VO.HidroviasVO;
+import br.com.example.repository.HidroviasRepository;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import java.util.List;
@@ -23,24 +23,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = "*")
 @OpenAPIDefinition(info = @Info(title = "BDGeo API", version = "1.0", description = "Dados Geograficos"))
-public class AeroportoController {
+public class HidroviasController {
     
     @Autowired
-    private AeroportoRepository repository;
+    private HidroviasRepository repository;
     
-    @GetMapping("/aeroportosUF/{sigla}")
-    public List<AeroportoVO> aeroportosUF(@PathVariable String sigla){
-        return repository.listarAeroportosUF(sigla);
+    @GetMapping("/hidroviasRegiao/{regiao}")
+    public List<HidroviasVO> hidroviasRegiao(@PathVariable String regiao){
+        return repository.hidroviasRegiao(regiao);
     }
     
-    @GetMapping("/aeroportosRegiao/{regiao}")
-    public List<AeroportoVO> aeroportosRegiao(@PathVariable String regiao){
-        return repository.listarAeroportosRegiao(regiao);
+    @GetMapping("/hidroviasContidas/{regiao}")
+    public List<HidroviasVO> hidroviasContidas(@PathVariable String regiao){
+        return repository.hidroviasContidasRegiao(regiao);
     }
     
-    @GetMapping("/distanciaEntreAeroportos/{municipioA}/{municipioB}")
-    public Double distanciaAeroportos(@PathVariable String municipioA, @PathVariable String municipioB){
-        return repository.distanciaAeroportos(municipioA, municipioB);
+    @GetMapping("/hidroviasOverlaps/{regiao}")
+    public List<HidroviasVO> hidroviasOverlaps(@PathVariable String regiao){
+        return repository.hidroviasOverlapsUFPorRegiao(regiao);
     }
     
+    @GetMapping("/areasHidrovias/{km2}")
+    public List<Double> listarAreasKm2Hidrovias(@PathVariable Integer km2){
+        return repository.listarAreasKm2Hidrovias(km2);
+    }
 }

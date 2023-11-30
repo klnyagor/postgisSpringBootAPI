@@ -19,13 +19,13 @@ public interface AeroportoRepository extends JpaRepository<Aeroporto, Integer>{
     
     //-- Aeroportos no estado 'sigla_uf'
     @Query(value = "SELECT new br.com.example.model.VO.AeroportoVO(a.gid, a.objectid_1, a.municdv, a.uf, a.nome_uf, a.nome_regia, a.municipio, a.pax2010, a.internacio, a.geometria) FROM Aeroporto a, UnidadeFederativa uf WHERE ST_Within(a.geometria, uf.geometria)=true and uf.sigla_uf = :sigla")
-    List<AeroportoVO> aeroportosUF(String sigla);
+    List<AeroportoVO> listarAeroportosUF(String sigla);
     
     //-- Aeroportos na regiao 'nome_regia'
     @Query(value = "SELECT new br.com.example.model.VO.AeroportoVO(a.gid, a.objectid_1, a.municdv, a.uf, a.nome_uf, a.nome_regia, a.municipio, a.pax2010, a.internacio, a.geometria) FROM Aeroporto a, UnidadeFederativa uf WHERE ST_Contains(uf.geometria, a.geometria)=true and uf.nm_regiao = :regiao")
-    List<AeroportoVO> aeroportosRegiao(String regiao);
+    List<AeroportoVO> listarAeroportosRegiao(String regiao);
     
     //-- Distancia entre Aeroportos por nome das cidades 'municipio'
-    @Query(value = "SELECT ST_Distance(geography(a.geometria),geography(b.geometria)) FROM Aeroporto a, Aeroporto b WHERE a.municipio = :municipio1 and b.municipio = :municipio2")
+    @Query(value = "SELECT distance(geography(a.geometria),geography(b.geometria)) FROM Aeroporto a, Aeroporto b WHERE a.municipio = :municipio1 and b.municipio = :municipio2")
     public Double distanciaAeroportos(String municipio1, String municipio2);
 }
